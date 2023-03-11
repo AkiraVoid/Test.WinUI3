@@ -14,8 +14,11 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.Playback;
+using Windows.Media.SpeechSynthesis;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -30,9 +33,30 @@ namespace Test
         public MainWindow()
         {
             this.InitializeComponent();
-            People = new() { new() { Id = Guid.NewGuid(), Name = "A" }, new() { Id = Guid.NewGuid(), Name = "B" }, };
         }
 
-        public ObservableCollection<Person> People { get; set; }
+        private async Task SpeakAsync(string language, string text)
+        {
+            var player = new MediaPlayer();
+            var synth = new SpeechSynthesizer();
+            synth.Voice = SpeechSynthesizer.AllVoices.FirstOrDefault(v => v.Language == language) ??
+                SpeechSynthesizer.DefaultVoice;
+            var source = await synth.SynthesizeTextToStreamAsync(text);
+            synth.Dispose();
+            player.MediaEnded += (sender, _) =>
+            {
+                sender.Dispose();
+                source.Dispose();
+            };
+            player.SetStreamSource(source);
+            player.Play();
+        }
+
+
+        private void OnClick(object _sender, RoutedEventArgs _e)
+        {
+            SpeakAsync("en-US", "Test 1").Wait();
+            SpeakAsync("en-US", "Test 2").Wait();
+        }
     }
 }

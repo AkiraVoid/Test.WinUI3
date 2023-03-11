@@ -11,12 +11,6 @@
     mc:Ignorable="d">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <ListView ItemsSource="{x:Bind People}">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:Person">
-                    <local:PersonItem Person="{x:Bind}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Button Click="OnClick">Play</Button>
     </StackPanel>
 </Window>
