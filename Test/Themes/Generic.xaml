@@ -1,0 +1,59 @@
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
+
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Test">
+
+    <x:Double x:Key="CaptionTextFontSize">12</x:Double>
+
+    <Style TargetType="local:InputValidationHost">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:InputValidationHost">
+                    <StackPanel>
+                        <ContentPresenter Content="{TemplateBinding InputControl}" x:Name="InputControl" />
+                        <ContentPresenter x:Name="CaptionText" FontSize="{StaticResource CaptionTextFontSize}" />
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="SetStyleByState">
+                                <VisualState x:Name="Unvalidated">
+                                    <VisualState.StateTriggers>
+                                        <StateTrigger IsActive="{TemplateBinding IsUnvalidated}" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="CaptionText.Content"
+                                                Value="{TemplateBinding UnvalidatedMessage}" />
+                                        <Setter Target="CaptionText.Foreground"
+                                                Value="{ThemeResource SystemColorGrayTextColor}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Passed">
+                                    <VisualState.StateTriggers>
+                                        <StateTrigger IsActive="{TemplateBinding HasPassed}" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="CaptionText.Content" Value="{TemplateBinding PassedMessage}" />
+                                        <Setter Target="CaptionText.Foreground" Value="Green" />
+                                        <Setter Target="InputControl.Content.BorderBrush" Value="Green" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Error">
+                                    <VisualState.StateTriggers>
+                                        <StateTrigger IsActive="{TemplateBinding HasError}" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="CaptionText.Content" Value="{TemplateBinding ErrorMessage}" />
+                                        <Setter Target="CaptionText.Foreground" Value="Red" />
+                                        <Setter Target="InputControl.Content.BorderBrush" Value="Red" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

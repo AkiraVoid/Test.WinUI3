@@ -11,6 +11,10 @@
     mc:Ignorable="d">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button Click="OnClick">Play</Button>
+        <Button Click="OnClick">Check</Button>
+        <local:InputValidationHost ErrorMessage="Error" PassedMessage="Passed" UnvalidatedMessage="Unvalidated"
+                                   x:Name="InputValidation">
+            <TextBox />
+        </local:InputValidationHost>
     </StackPanel>
 </Window>

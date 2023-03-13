@@ -33,30 +33,15 @@ namespace Test
         public MainWindow()
         {
             this.InitializeComponent();
-        }
-
-        private async Task SpeakAsync(string language, string text)
-        {
-            var player = new MediaPlayer();
-            var synth = new SpeechSynthesizer();
-            synth.Voice = SpeechSynthesizer.AllVoices.FirstOrDefault(v => v.Language == language) ??
-                SpeechSynthesizer.DefaultVoice;
-            var source = await synth.SynthesizeTextToStreamAsync(text);
-            synth.Dispose();
-            player.MediaEnded += (sender, _) =>
-            {
-                sender.Dispose();
-                source.Dispose();
-            };
-            player.SetStreamSource(source);
-            player.Play();
+            InputValidation.GetContent = (control) => ((TextBox)control).Text;
+            InputValidation.Validators.Add(
+                (content) => content.ToString()!.Equals("Pass", StringComparison.InvariantCultureIgnoreCase));
         }
 
 
         private void OnClick(object _sender, RoutedEventArgs _e)
         {
-            SpeakAsync("en-US", "Test 1").Wait();
-            SpeakAsync("en-US", "Test 2").Wait();
+            InputValidation.TriggerValidation();
         }
     }
 }
