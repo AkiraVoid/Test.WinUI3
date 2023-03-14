@@ -7,6 +7,8 @@
     xmlns:local="using:Test">
 
     <x:Double x:Key="CaptionTextFontSize">12</x:Double>
+    <SolidColorBrush x:Key="GreenBrush" Color="Green" />
+    <SolidColorBrush x:Key="RedBrush" Color="Red" />
 
     <Style TargetType="local:InputValidationHost">
         <Setter Property="Template">
@@ -19,9 +21,6 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SetStyleByState">
                                 <VisualState x:Name="Unvalidated">
-                                    <VisualState.StateTriggers>
-                                        <StateTrigger IsActive="{TemplateBinding IsUnvalidated}" />
-                                    </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="CaptionText.Content"
                                                 Value="{TemplateBinding UnvalidatedMessage}" />
@@ -30,23 +29,19 @@
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Passed">
-                                    <VisualState.StateTriggers>
-                                        <StateTrigger IsActive="{TemplateBinding HasPassed}" />
-                                    </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="CaptionText.Content" Value="{TemplateBinding PassedMessage}" />
-                                        <Setter Target="CaptionText.Foreground" Value="Green" />
-                                        <Setter Target="InputControl.Content.BorderBrush" Value="Green" />
+                                        <Setter Target="CaptionText.Foreground" Value="{StaticResource GreenBrush}" />
+                                        <Setter Target="InputControl.Content.BorderBrush"
+                                                Value="{StaticResource GreenBrush}" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Error">
-                                    <VisualState.StateTriggers>
-                                        <StateTrigger IsActive="{TemplateBinding HasError}" />
-                                    </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="CaptionText.Content" Value="{TemplateBinding ErrorMessage}" />
-                                        <Setter Target="CaptionText.Foreground" Value="Red" />
-                                        <Setter Target="InputControl.Content.BorderBrush" Value="Red" />
+                                        <Setter Target="CaptionText.Foreground" Value="{StaticResource RedBrush}" />
+                                        <Setter Target="InputControl.Content.BorderBrush"
+                                                Value="{StaticResource RedBrush}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
